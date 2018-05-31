@@ -23,7 +23,7 @@ public class CommandLoadout extends CommandBase
 {
 	private final List<String> aliases;
 	
-	private final List<String> commands = Lists.newArrayList("create","delete", "list", "view", "reload");
+	private final List<String> commands = Lists.newArrayList("create","delete", "list", "view", "reload", "help");
 	
 	public CommandLoadout()
 	{
@@ -39,13 +39,7 @@ public class CommandLoadout extends CommandBase
 	@Override
 	public String getUsage(ICommandSender sender)
 	{
-		sender.sendMessage(new TextComponentTranslation("loadout.command.help.create","/lo create <name>"));
-		sender.sendMessage(new TextComponentTranslation("loadout.command.help.delete", "/lo delete <name>"));
-		sender.sendMessage(new TextComponentTranslation("loadout.command.help.list", "/lo list"));
-		sender.sendMessage(new TextComponentTranslation("loadout.command.help.view","/lo view <name>"));
-		sender.sendMessage(new TextComponentTranslation("loadout.command.help.reload", "/lo reload"));
-		
-		return "Requires OP to use";
+		return "/lo create <name> | delete <name> | list | view <name> | reload | help <create|delete|list|view|reload|help>";
 	}
 	
 	
@@ -73,6 +67,11 @@ public class CommandLoadout extends CommandBase
 		
 		if(args[0].equals("create"))
 		{
+			if(args.length ==1)
+			{
+				sender.sendMessage(new TextComponentTranslation("loadout.command.help."+args[0]));
+				return;
+			}
 			
 			NonNullList<ItemStack> loadout=NonNullList.create();
 			
@@ -92,6 +91,12 @@ public class CommandLoadout extends CommandBase
 		
 		if(args[0].equals("delete"))
 		{
+			if(args.length ==1)
+			{
+				sender.sendMessage(new TextComponentTranslation("loadout.command.help."+args[0]));
+				return;
+			}
+			
 			if(LoadoutManager.loadouts.containsKey(args[1]))
 			{
 				LoadoutManager.loadouts.remove(args[1]);
@@ -120,6 +125,12 @@ public class CommandLoadout extends CommandBase
 		
 		if(args[0].equals("view"))
 		{
+			if(args.length ==1)
+			{
+				sender.sendMessage(new TextComponentTranslation("loadout.command.help."+args[0]));
+				return;
+			}
+			
 			if(LoadoutManager.loadouts.containsKey(args[1]))
 			{
 				sender.sendMessage(new TextComponentTranslation("loadout.command.view.success", args[1]));
@@ -138,12 +149,22 @@ public class CommandLoadout extends CommandBase
 			
 			sender.sendMessage(new TextComponentTranslation("loadout.command.reload",LoadoutManager.loadouts.size()));
 		}
+		
+		if(args[0].equals("help"))
+		{
+			if(args.length == 1)
+				sender.sendMessage(new TextComponentTranslation("loadout.command.help"));
+			else if(commands.contains(args[1]))
+			{
+				sender.sendMessage(new TextComponentTranslation("loadout.command.help."+args[1]));
+			}
+		}
 	}
 	
 	@Override
 	public int getRequiredPermissionLevel()
 	{
-		return 4;
+		return 3;
 	}
 	
 	@Override

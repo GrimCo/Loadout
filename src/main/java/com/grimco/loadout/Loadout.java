@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = Loadout.MOD_ID, name = Loadout.MOD_NAME, version = Loadout.MOD_VERSION)
+@Mod(modid = Loadout.MOD_ID, name = Loadout.MOD_NAME, version = Loadout.MOD_VERSION, acceptableRemoteVersions = "*")
 public class Loadout
 {
 	public final static String MOD_ID = "loadout";

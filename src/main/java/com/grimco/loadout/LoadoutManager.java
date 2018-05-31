@@ -3,19 +3,15 @@ package com.grimco.loadout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.world.ChunkEvent.Load;
 
 import java.io.File;
 import java.io.FileReader;
@@ -67,8 +63,6 @@ public class LoadoutManager
 			{
 				NonNullList<ItemStack> loadout_items = NonNullList.create();
 				((JsonArray)json.get(key)).forEach(jsonElement -> loadout_items.add(deserializeItems((JsonObject)jsonElement)));
-				
-				System.out.println("Loadout: " + key + " Items: " + loadout_items);
 				
 				loadouts.put(key, loadout_items);
 			}
@@ -150,6 +144,7 @@ public class LoadoutManager
 		private static Map<String, Object> serializeItem (ItemStack stack)
 		{
 			Map<String, Object> ret=new HashMap<>();
+			
 			ret.put("item", stack.getItem().getRegistryName().toString());
 			if(stack.getItem().getHasSubtypes()||stack.getItemDamage()!=0)
 				ret.put("data", stack.getItemDamage());
@@ -162,6 +157,7 @@ public class LoadoutManager
 			}
 			
 			return ret;
+			
 		}
 	}
 }
