@@ -1,7 +1,7 @@
 package com.grimco.loadout;
 
-import com.grimco.loadout.capability.CapabilityLoadout;
 import com.grimco.loadout.command.CommandLoadout;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -18,7 +18,7 @@ public class Loadout
 {
 	public final static String MOD_ID = "loadout";
 	public final static String MOD_NAME = "Loadout";
-	public final static String MOD_VERSION = "@VERSION@";
+	public final static String MOD_VERSION = "1.0.2";
 	
 	@Instance
 	public Loadout instance;
@@ -33,7 +33,6 @@ public class Loadout
 		logger = event.getModLog();
 		
 		createGrimcoDir(event.getModConfigurationDirectory());
-		CapabilityLoadout.register();
 	}
 	
 	@EventHandler
@@ -67,5 +66,14 @@ public class Loadout
 		{
 			GRIMCO_DIR.mkdir();
 		}
+	}
+	
+	@Config(modid = MOD_ID, name = "grimco/loadout")
+	public static class ModConfig
+	{
+		@Config.Comment("Should Loadouts with Armor auto equip them if possible")
+		public static boolean equipArmor = false;
+		
+		
 	}
 }
